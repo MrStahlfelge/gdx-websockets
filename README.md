@@ -1,46 +1,48 @@
 # LibGDX Web Sockets
 
+Fork of [czyzby's websockets](https://github.com/czyzby/gdx-lml/tree/master/websocket), which seem to be unmaintained.
+
+See there for examples.
+
 Default LibGDX `Net` API provides only TCP sockets and HTTP requests. This library aims to add client-side web sockets support.
 
 `ExtendedNet` (as unfortunate as it might sound) contains additional methods for opening web sockets, as well as some static instance providers. `WebSockets` class has some general web sockets utilities. Both binary and text packets are supported on every platform (but note that older browsers might have problems with binary data). The code is heavily documented.
-
-See example project [using simple string communication](../examples/gdx-websocket-tests) or [using JSON serialization](../examples/gdx-websocket-json) for more info and a basic working application examples. [This mock-up application](../examples/gdx-lml-vis-websocket) uses `gdx-websocket` to connect with an external web socket echo server. *Note: examples might depend on latest snapshot versions and use new features.*
 
 Note that this library contains *only* the web sockets *abstraction* - it has the necessary interfaces, basic serialization (using LibGDX API) and some abstract implementations, but not much else. Every platform has to include a specific library with the actual implementation and initiate its module before using web sockets. Make sure to check out natives libraries `READMEs`.
 
 ## Dependencies
 `Gradle` dependency (for LibGDX core project):
 ```
-         compile "com.github.czyzby:gdx-websocket:$libVersion.$gdxVersion"
+         compile "com.github.MrStahlfelge.gdx-websockets:core:$wsVersion"
 ```
-`$libVersion` is the current version of the library, usually following `MAJOR.MINOR` schema. `$gdxVersion` is the LibGDX version used to build (and required by) the library. You can check the current library version [here](http://search.maven.org/#search|ga|1|g%3A%22com.github.czyzby%22) - or you can use the [snapshots](https://oss.sonatype.org/content/repositories/snapshots/com/github/czyzby/).
 
 GWT module:
 ```
          <inherits name='com.github.czyzby.websocket.GdxWebSocket' />
 ```
 
-### Natives
+### Implementations
 
-Desktop/Android [natives](natives/common):
+Desktop/Android:
 ```
-         compile "com.github.czyzby:gdx-websocket-common:$libVersion.$gdxVersion"
-```
-
-GWT [natives](natives/gwt):
-```
-        compile "com.github.czyzby:gdx-websocket-gwt:$libVersion.$gdxVersion"
-        compile "com.github.czyzby:gdx-websocket-gwt:$libVersion.$gdxVersion:sources"
+         compile "com.github.MrStahlfelge.gdx-websockets:common:$wsVersion"
 ```
 
-GWT natives module:
+GWT:
+```
+        compile "com.github.MrStahlfelge.gdx-websockets:core:$wsVersion:sources"
+        compile "com.github.MrStahlfelge.gdx-websockets:html:$wsVersion"
+        compile "com.github.MrStahlfelge.gdx-websockets:html:$wsVersion:sources"
+```
+
+GWT module:
 ```
         <inherits name='com.github.czyzby.websocket.GdxWebSocketGwt' />
 ```
 
 ### Extensions
 
-- [gdx-websocket-serialization](natives/serialization): a custom serialization mechanism, not based on reflection. Alternative to JSON-based communication. More verbose, but gives you full control over (de)serialization process. Useful for performance-critical applications. Check out its [example project](../examples/gdx-websocket-serialization-tests).
+- [gdx-websocket-serialization](natives/serialization): a custom serialization mechanism, not based on reflection. Alternative to JSON-based communication. More verbose, but gives you full control over (de)serialization process. Useful for performance-critical applications.
 
 ## Changes
 

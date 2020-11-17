@@ -1,0 +1,33 @@
+apply plugin: 'java-library'
+
+configurations {
+	custom
+	compile.extendsFrom custom
+}
+
+eclipse {
+	project {
+		name = appName + "-core"
+	}
+}
+
+dependencies {
+	implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+}
+
+targetCompatibility = 1.7
+sourceCompatibility = 1.7
+
+
+ext {
+	ARTIFACTID = 'gdx-controllers-core'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+artifacts {
+	archives sourcesJar
+}
