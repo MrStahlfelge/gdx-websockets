@@ -23,7 +23,7 @@ public class NvWebSocket extends AbstractWebSocket {
             dispose();
             final WebSocket currentWebSocket = webSocket = webSocketFactory.createSocket(getUrl());
             currentWebSocket.addListener(new NvWebSocketListener(this));
-            currentWebSocket.connect();
+            currentWebSocket.connectAsynchronously();
         } catch (final Throwable exception) {
             throw new WebSocketException("Unable to connect.", exception);
         }
