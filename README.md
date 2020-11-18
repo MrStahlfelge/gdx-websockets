@@ -1,14 +1,10 @@
-# LibGDX Web Sockets
+# libGDX Web Sockets
 
 Fork of [czyzby's websockets](https://github.com/czyzby/gdx-lml/tree/master/websocket), which seem to be unmaintained.
 
 See there for examples.
 
-Default LibGDX `Net` API provides only TCP sockets and HTTP requests. This library aims to add client-side web sockets support.
-
-`ExtendedNet` (as unfortunate as it might sound) contains additional methods for opening web sockets, as well as some static instance providers. `WebSockets` class has some general web sockets utilities. Both binary and text packets are supported on every platform (but note that older browsers might have problems with binary data). The code is heavily documented.
-
-Note that this library contains *only* the web sockets *abstraction* - it has the necessary interfaces, basic serialization (using LibGDX API) and some abstract implementations, but not much else. Every platform has to include a specific library with the actual implementation and initiate its module before using web sockets. Make sure to check out natives libraries `READMEs`.
+Default libGDX `Net` API provides only TCP sockets and HTTP requests. This library aims to add client-side web sockets support.
 
 ## Dependencies
 `Gradle` dependency (for LibGDX core project):
@@ -21,12 +17,12 @@ GWT module:
          <inherits name='com.github.czyzby.websocket.GdxWebSocket' />
 ```
 
-### Implementations
-
-Desktop/Android:
+Desktop/Android/iOS:
 ```
          compile "com.github.MrStahlfelge.gdx-websockets:common:$wsVersion"
 ```
+
+(based on [nv-websocket-client](https://github.com/TakahikoKawasaki/nv-websocket-client))
 
 GWT:
 ```
@@ -42,7 +38,37 @@ GWT module:
 
 ### Extensions
 
-- [gdx-websocket-serialization](natives/serialization): a custom serialization mechanism, not based on reflection. Alternative to JSON-based communication. More verbose, but gives you full control over (de)serialization process. Useful for performance-critical applications.
+- [gdx-websocket-serialization](master/serialization): a custom serialization mechanism, not based on reflection. Alternative to JSON-based communication. More verbose, but gives you full control over (de)serialization process. Useful for performance-critical applications.
+
+## Basic usage
+
+### Initialization
+
+Make sure to call `CommonWebSockets.initiate()` in DesktopLauncher/AndroidLauncher/IOSLauncher launchers before creating web sockets:
+```
+        // Initiating web sockets module - safe to call before creating application:
+        CommonWebSockets.initiate();
+        new LwjglApplication(new MyApplicationListener());
+```
+
+In HTMLLauncher, make sure to call `GwtWebSockets.initiate()` before creating web sockets:
+```
+        @Override
+        public ApplicationListener createApplicationListener() {
+            // Initiating web sockets module - safe to call before creating application listener:
+            GwtWebSockets.initiate();
+            return new MyApplicationListener();
+        }
+```
+
+### Connecting to a server
+
+```
+        WebSocket socket = WebSockets.newSocket(WebSockets.toWebSocketUrl(address, port));
+        socket.setSendGracefully(true);
+        socket.addListener(new WebsocketListener() { ... });
+        socket.connect();
+```
 
 ## Changes
 
