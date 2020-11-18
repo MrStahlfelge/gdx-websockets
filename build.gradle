@@ -1,6 +1,6 @@
 ext {
     GROUPID = 'com.github.MrStahlfelge.gdx-websockets'
-    VERSION = '1.9.10.0-SNAPSHOT'
+    VERSION = '1.9.10.1-SNAPSHOT'
 
 }
 
@@ -31,6 +31,7 @@ allprojects {
         appName = 'gdx-websockets'
         gdxVersion = '1.9.10'
         roboVMVersion = '2.3.12-SNAPSHOT'
+        nvVersion = '2.10'
     }
 
     repositories {

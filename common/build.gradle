@@ -1,9 +1,5 @@
 apply plugin: 'java-library'
 
-ext {
-  nvVersion = '1.31'
-}
-
 dependencies {
   api project(":core")
   compile "com.neovisionaries:nv-websocket-client:$nvVersion"
