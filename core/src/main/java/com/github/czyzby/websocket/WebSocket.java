@@ -63,6 +63,12 @@ public interface WebSocket {
      *            listeners. Defaults to false. */
     void setSendGracefully(boolean sendGracefully);
 
+    /**
+     * @param tcpNoDelay set this flag to configure if websocket should use TCP_NODELAY. This does
+     *                   not change behaviour on HTML5, where it is activated on most browsers.
+     */
+    void setUseTcpNoDelay(boolean tcpNoDelay);
+
     /** @param packet will be serialized and sent to the server if the client is connected. Nulls are ignored. Request
      *            is ignored if client is not connected. Fails if no serializer is set.
      * @throws WebSocketException if unable to send the packet due to an exception. Not thrown if the client is not

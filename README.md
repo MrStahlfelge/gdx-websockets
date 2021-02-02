@@ -5,9 +5,10 @@ Fork of [czyzby's websockets](https://github.com/czyzby/gdx-lml/tree/master/webs
 See there for examples.
 
 Default libGDX `Net` API provides only TCP sockets and HTTP requests. This library aims to add client-side web sockets support.
+It works on all platforms targeted by libGDX.
 
 ## Dependencies
-`Gradle` dependency (for LibGDX core project):
+`Gradle` dependency (for libGDX core project):
 ```
          compile "com.github.MrStahlfelge.gdx-websockets:core:$wsVersion"
 ```
@@ -38,7 +39,7 @@ GWT module:
 
 ### Extensions
 
-- [gdx-websocket-serialization](master/serialization): a custom serialization mechanism, not based on reflection. Alternative to JSON-based communication. More verbose, but gives you full control over (de)serialization process. Useful for performance-critical applications.
+- [gdx-websocket-serialization](https://github.com/MrStahlfelge/gdx-websockets/tree/master/serialization): a custom serialization mechanism, not based on reflection. Alternative to JSON-based communication. More verbose, but gives you full control over (de)serialization process. Useful for performance-critical applications.
 
 ## Basic usage
 

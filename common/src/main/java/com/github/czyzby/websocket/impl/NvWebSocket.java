@@ -6,6 +6,8 @@ import com.github.czyzby.websocket.data.WebSocketState;
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketFactory;
 
+import java.net.SocketException;
+
 /** Default web socket implementation for desktop and mobile platforms.
  *
  * @author MJ */
@@ -26,6 +28,17 @@ public class NvWebSocket extends AbstractWebSocket {
             currentWebSocket.connectAsynchronously();
         } catch (final Throwable exception) {
             throw new WebSocketException("Unable to connect.", exception);
+        }
+    }
+
+    @Override
+    public void setUseTcpNoDelay(boolean useTcpNoDelay) {
+        super.setUseTcpNoDelay(useTcpNoDelay);
+        if (webSocket != null && webSocket.getSocket() != null) {
+            try {
+                webSocket.getSocket().setTcpNoDelay(useTcpNoDelay);
+            } catch (SocketException ignored) {
+            }
         }
     }
 

@@ -18,6 +18,7 @@ public abstract class AbstractWebSocket implements WebSocket {
     private Serializer serializer = WebSockets.DEFAULT_SERIALIZER;
     private boolean serializeAsString;
     private boolean sendGracefully;
+    protected boolean useTcpNoDelay = true;
 
     public AbstractWebSocket(final String url) {
         this.url = url;
@@ -43,6 +44,10 @@ public abstract class AbstractWebSocket implements WebSocket {
         this.sendGracefully = sendGracefully;
     }
 
+    public void setUseTcpNoDelay(boolean useTcpNoDelay) {
+        this.useTcpNoDelay = useTcpNoDelay;
+    }
+
     @Override
     public void addListener(final WebSocketListener listener) {
         listeners.add(listener);
@@ -60,6 +65,7 @@ public abstract class AbstractWebSocket implements WebSocket {
 
     /** Listeners will be notified about socket opening. */
     protected void postOpenEvent() {
+        setUseTcpNoDelay(useTcpNoDelay);
         for (final WebSocketListener listener : listeners) {
             if (listener.onOpen(this)) {
                 break;
