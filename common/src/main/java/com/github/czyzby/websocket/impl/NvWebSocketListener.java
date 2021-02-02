@@ -40,7 +40,7 @@ public class NvWebSocketListener extends WebSocketAdapter {
     }
 
     private void triggerOnDisconnectEvent(final int closeCode, final String closeReason) {
-        socket.postCloseEvent(WebSocketCloseCode.getByCodeOrElse(closeCode, WebSocketCloseCode.ABNORMAL), closeReason);
+        socket.postCloseEvent(closeCode, closeReason);
     }
 
     @Override

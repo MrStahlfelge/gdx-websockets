@@ -19,6 +19,10 @@ public class WebSockets {
      * strings or byte arrays when using {@link WebSocket#send(Object)} method. By default, serializes objects to JSON
      * format using {@link JsonSerializer}. */
     public static Serializer DEFAULT_SERIALIZER = new JsonSerializer();
+    /**
+     * Close code used to indicate an abnormal, automated close of the socket
+     */
+    public static int ABNORMAL_AUTOMATIC_CLOSE_CODE = 3000;
 
     private WebSockets() {
     }

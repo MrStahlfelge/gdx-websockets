@@ -105,14 +105,14 @@ public interface WebSocket {
 
     /** Closes the connection. Uses no disconnection reason.
      *
-     * @param code connection close code. Cannot be null.
+     * @param closeCode connection close code. Cannot be null.
      * @throws WebSocketException if unable to close the connection. */
-    void close(WebSocketCloseCode code) throws WebSocketException;
+    void close(int closeCode) throws WebSocketException;
 
     /** Closes the connection.
      *
-     * @param code connection close code. Cannot be null.
+     * @param closeCode connection close code.
      * @param reason closing reason. Optional.
      * @throws WebSocketException if unable to close the connection. */
-    void close(WebSocketCloseCode code, String reason) throws WebSocketException;
+    void close(int closeCode, String reason) throws WebSocketException;
 }

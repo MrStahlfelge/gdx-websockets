@@ -1,5 +1,6 @@
 package com.github.czyzby.websocket.impl;
 
+import com.github.czyzby.websocket.WebSockets;
 import com.github.czyzby.websocket.data.WebSocketCloseCode;
 import com.github.czyzby.websocket.data.WebSocketException;
 import com.github.czyzby.websocket.data.WebSocketState;
@@ -47,7 +48,7 @@ public class NvWebSocket extends AbstractWebSocket {
         final WebSocket currentWebSocket = webSocket;
         if (currentWebSocket != null && currentWebSocket.isOpen()) {
             try {
-                currentWebSocket.disconnect(WebSocketCloseCode.AWAY.getCode());
+                currentWebSocket.disconnect(WebSockets.ABNORMAL_AUTOMATIC_CLOSE_CODE);
             } catch (final Exception exception) {
                 postErrorEvent(exception);
             }
@@ -88,11 +89,12 @@ public class NvWebSocket extends AbstractWebSocket {
     }
 
     @Override
-    public void close(final WebSocketCloseCode code, final String reason) throws WebSocketException {
+    public void close(final int closeCode, final String reason) throws WebSocketException {
+        WebSocketCloseCode.checkIfAllowedInClient(closeCode);
         final WebSocket currentWebSocket = webSocket;
         if (currentWebSocket != null) {
             try {
-                currentWebSocket.disconnect(code.getCode(), reason);
+                currentWebSocket.disconnect(closeCode, reason);
             } catch (final Throwable exception) {
                 throw new WebSocketException("Unable to close the web socket.", exception);
             }

@@ -23,12 +23,12 @@ public interface WebSocketListener {
     /** Triggered when the client is disconnected.
      *
      * @param webSocket affected socket.
-     * @param code code of closing.
+     * @param closeCode code of closing.
      * @param reason optional reason of the closing.
      * @return <code>true</code> if event fully handled and other listeners should not be notified.
      * @see #FULLY_HANDLED
      * @see #NOT_HANDLED */
-    boolean onClose(WebSocket webSocket, WebSocketCloseCode code, String reason);
+    boolean onClose(WebSocket webSocket, int closeCode, String reason);
 
     /** @param webSocket affected socket.
      * @param packet received from the server.

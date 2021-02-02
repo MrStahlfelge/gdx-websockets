@@ -77,7 +77,7 @@ public abstract class AbstractWebSocket implements WebSocket {
      *
      * @param closeCode closing code.
      * @param reason optional closing reason. */
-    protected void postCloseEvent(final WebSocketCloseCode closeCode, final String reason) {
+    protected void postCloseEvent(final int closeCode, final String reason) {
         for (final WebSocketListener listener : listeners) {
             if (listener.onClose(this, closeCode, reason)) {
                 break;
@@ -239,7 +239,7 @@ public abstract class AbstractWebSocket implements WebSocket {
     }
 
     @Override
-    public void close(final WebSocketCloseCode code) throws WebSocketException {
-        close(code, null);
+    public void close(final int closeCode) throws WebSocketException {
+        close(closeCode, null);
     }
 }

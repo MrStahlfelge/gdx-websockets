@@ -17,7 +17,7 @@ public abstract class AbstractWebSocketListener implements WebSocketListener {
     }
 
     @Override
-    public boolean onClose(final WebSocket webSocket, final WebSocketCloseCode code, final String reason) {
+    public boolean onClose(final WebSocket webSocket, final int closecCode, final String reason) {
         return NOT_HANDLED;
     }
 

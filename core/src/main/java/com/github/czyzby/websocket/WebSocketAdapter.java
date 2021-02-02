@@ -12,7 +12,7 @@ public class WebSocketAdapter implements WebSocketListener {
     }
 
     @Override
-    public boolean onClose(final WebSocket webSocket, final WebSocketCloseCode code, final String reason) {
+    public boolean onClose(final WebSocket webSocket, final int closeCode, final String reason) {
         return NOT_HANDLED;
     }
 

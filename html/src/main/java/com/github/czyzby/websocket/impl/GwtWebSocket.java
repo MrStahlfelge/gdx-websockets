@@ -1,5 +1,6 @@
 package com.github.czyzby.websocket.impl;
 
+import com.github.czyzby.websocket.WebSockets;
 import com.github.czyzby.websocket.data.WebSocketCloseCode;
 import com.github.czyzby.websocket.data.WebSocketException;
 import com.github.czyzby.websocket.data.WebSocketState;
@@ -26,7 +27,7 @@ public class GwtWebSocket extends AbstractWebSocket {
     @Override
     public void connect() throws WebSocketException {
         if (isOpen() || isConnecting()) {
-            close(WebSocketCloseCode.AWAY);
+            close(WebSockets.ABNORMAL_AUTOMATIC_CLOSE_CODE);
         }
         try {
             open(super.getUrl());
@@ -77,7 +78,7 @@ public class GwtWebSocket extends AbstractWebSocket {
      * @param closeCode see {@link WebSocketCloseCode}.
      * @param reason optional closing reason. */
     protected void onClose(final int closeCode, final String reason) {
-        postCloseEvent(WebSocketCloseCode.getByCodeOrElse(closeCode, WebSocketCloseCode.ABNORMAL), reason);
+        postCloseEvent(closeCode, reason);
     }
 
     /** Invoked by native listener.
@@ -143,9 +144,10 @@ public class GwtWebSocket extends AbstractWebSocket {
                                      }-*/;
 
     @Override
-    public void close(final WebSocketCloseCode code, final String reason) throws WebSocketException {
+    public void close(final int closeCode, final String reason) throws WebSocketException {
+        WebSocketCloseCode.checkIfAllowedInClient(closeCode);
         try {
-            close(code.getCode(), reason);
+            nativeClose(closeCode, reason);
         } catch (final Throwable exception) {
             throw new WebSocketException("Unable to close the web socket.", exception);
         }
@@ -155,7 +157,7 @@ public class GwtWebSocket extends AbstractWebSocket {
      *
      * @param code see {@link WebSocketCloseCode}.
      * @param reason optional closing reason. */
-    protected native void close(int code, String reason)/*-{
+    protected native void nativeClose(int code, String reason)/*-{
                                                         if(this.ws){
                                                         this.ws.close(code,reason);
                                                         }
