@@ -6,14 +6,15 @@ ext {
 
 buildscript {
     repositories {
-        jcenter()
         google()
+        mavenCentral()
+        maven { url 'https://plugins.gradle.org/m2/' }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
         classpath "org.wisepersist:gwt-gradle-plugin:1.0.13"
         classpath "com.android.tools.build:gradle:3.6.3"
-        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.12-SNAPSHOT'
+        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.12'
     }
 }
 
@@ -30,12 +31,11 @@ allprojects {
 
         appName = 'gdx-websockets'
         gdxVersion = '1.9.10'
-        roboVMVersion = '2.3.12-SNAPSHOT'
+        roboVMVersion = '2.3.12'
         nvVersion = '2.10'
     }
 
     repositories {
-        jcenter()
         google()
         mavenCentral()
         mavenLocal()
