@@ -66,8 +66,17 @@ public interface WebSocket {
     /**
      * @param tcpNoDelay set this flag to configure if websocket should use TCP_NODELAY. This does
      *                   not change behaviour on HTML5, where it is activated on most browsers.
+     *                   Default is true
      */
     void setUseTcpNoDelay(boolean tcpNoDelay);
+
+    /**
+     * @param verifyHostname set this flag to configure if websocket should verify hostnames for SSL
+     *                       connections. It is more secure, but will fail on older Android devices
+     *                       with self-signed certificates. This does not change behaviour on HTML5.
+     *                       Default is false
+     */
+    void setVerifyHostname(boolean verifyHostname);
 
     /** @param packet will be serialized and sent to the server if the client is connected. Nulls are ignored. Request
      *            is ignored if client is not connected. Fails if no serializer is set.

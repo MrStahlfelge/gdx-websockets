@@ -18,6 +18,7 @@ public class NvWebSocket extends AbstractWebSocket {
 
     public NvWebSocket(final String url) {
         super(url);
+        webSocketFactory.setVerifyHostname(verifyHostname);
     }
 
     @Override

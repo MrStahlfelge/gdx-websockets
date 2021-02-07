@@ -9,16 +9,19 @@ import com.github.czyzby.websocket.data.WebSocketException;
 import com.github.czyzby.websocket.data.WebSocketState;
 import com.github.czyzby.websocket.serialization.Serializer;
 
-/** Abstract base for {@link WebSocket} implementations.
+/**
+ * Abstract base for {@link WebSocket} implementations.
  *
- * @author MJ */
+ * @author MJ
+ */
 public abstract class AbstractWebSocket implements WebSocket {
     private final String url;
     private final Array<WebSocketListener> listeners = new Array<WebSocketListener>(2); // Default 16 is likely too big.
+    protected boolean useTcpNoDelay = true;
+    protected boolean verifyHostname = false;
     private Serializer serializer = WebSockets.DEFAULT_SERIALIZER;
     private boolean serializeAsString;
     private boolean sendGracefully;
-    protected boolean useTcpNoDelay = true;
 
     public AbstractWebSocket(final String url) {
         this.url = url;
@@ -49,6 +52,11 @@ public abstract class AbstractWebSocket implements WebSocket {
     }
 
     @Override
+    public void setVerifyHostname(boolean verifyHostname) {
+        this.verifyHostname = verifyHostname;
+    }
+
+    @Override
     public void addListener(final WebSocketListener listener) {
         listeners.add(listener);
     }
@@ -58,12 +66,16 @@ public abstract class AbstractWebSocket implements WebSocket {
         listeners.removeValue(listener, true);
     }
 
-    /** @return internal collection of all registered listeners. */
+    /**
+     * @return internal collection of all registered listeners.
+     */
     protected Array<WebSocketListener> getListeners() {
         return listeners;
     }
 
-    /** Listeners will be notified about socket opening. */
+    /**
+     * Listeners will be notified about socket opening.
+     */
     protected void postOpenEvent() {
         setUseTcpNoDelay(useTcpNoDelay);
         for (final WebSocketListener listener : listeners) {
@@ -73,10 +85,12 @@ public abstract class AbstractWebSocket implements WebSocket {
         }
     }
 
-    /** Listeners will be notified about socket closing.
+    /**
+     * Listeners will be notified about socket closing.
      *
      * @param closeCode closing code.
-     * @param reason optional closing reason. */
+     * @param reason    optional closing reason.
+     */
     protected void postCloseEvent(final int closeCode, final String reason) {
         for (final WebSocketListener listener : listeners) {
             if (listener.onClose(this, closeCode, reason)) {
@@ -85,9 +99,11 @@ public abstract class AbstractWebSocket implements WebSocket {
         }
     }
 
-    /** Listeners will be notified about socket error.
+    /**
+     * Listeners will be notified about socket error.
      *
-     * @param error thrown during by the socket or socket related actions. */
+     * @param error thrown during by the socket or socket related actions.
+     */
     protected void postErrorEvent(final Throwable error) {
         for (final WebSocketListener listener : listeners) {
             if (listener.onError(this, error)) {
@@ -96,9 +112,11 @@ public abstract class AbstractWebSocket implements WebSocket {
         }
     }
 
-    /** Listeners will be notified about received message.
+    /**
+     * Listeners will be notified about received message.
      *
-     * @param packet sent by the server. */
+     * @param packet sent by the server.
+     */
     protected void postMessageEvent(final byte[] packet) {
         for (final WebSocketListener listener : listeners) {
             if (listener.onMessage(this, packet)) {
@@ -107,9 +125,11 @@ public abstract class AbstractWebSocket implements WebSocket {
         }
     }
 
-    /** Listeners will be notified about received message.
+    /**
+     * Listeners will be notified about received message.
      *
-     * @param packet sent by the server. */
+     * @param packet sent by the server.
+     */
     protected void postMessageEvent(final String packet) {
         for (final WebSocketListener listener : listeners) {
             if (listener.onMessage(this, packet)) {
@@ -171,7 +191,9 @@ public abstract class AbstractWebSocket implements WebSocket {
         return getState() == WebSocketState.CONNECTING;
     }
 
-    /** @param exception will be rethrown as {@link WebSocketException} or notify listeners if sending is graceful. */
+    /**
+     * @param exception will be rethrown as {@link WebSocketException} or notify listeners if sending is graceful.
+     */
     protected void onSendingException(final Exception exception) {
         if (sendGracefully) {
             postErrorEvent(exception);
@@ -180,7 +202,9 @@ public abstract class AbstractWebSocket implements WebSocket {
         }
     }
 
-    /** @param exception will be rethrown or notify listeners if sending is graceful. */
+    /**
+     * @param exception will be rethrown or notify listeners if sending is graceful.
+     */
     protected void onSendingException(final WebSocketException exception) {
         if (sendGracefully) {
             postErrorEvent(exception);
@@ -215,12 +239,16 @@ public abstract class AbstractWebSocket implements WebSocket {
         }
     }
 
-    /** @param packet should be sent to the server. Is never null.
-     * @throws Exception thrown during sending. */
+    /**
+     * @param packet should be sent to the server. Is never null.
+     * @throws Exception thrown during sending.
+     */
     protected abstract void sendBinary(byte[] packet) throws Exception;
 
-    /** @param packet should be sent to the server. Is never null.
-     * @throws Exception thrown during sending. */
+    /**
+     * @param packet should be sent to the server. Is never null.
+     * @throws Exception thrown during sending.
+     */
     protected abstract void sendString(String packet) throws Exception;
 
     @Override
