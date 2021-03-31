@@ -8,6 +8,10 @@ Default libGDX `Net` API provides only TCP sockets and HTTP requests. This libra
 It works on all platforms targeted by libGDX.
 
 ## Dependencies
+If you don't have already, add Jitpack to your repositories:
+
+        maven { url "https://jitpack.io" }
+
 `Gradle` dependency (for libGDX core project):
 ```
          compile "com.github.MrStahlfelge.gdx-websockets:core:$wsVersion"
