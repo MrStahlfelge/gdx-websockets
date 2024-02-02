@@ -8,13 +8,13 @@ Default libGDX `Net` API provides only TCP sockets and HTTP requests. This libra
 It works on all platforms targeted by libGDX.
 
 ## Dependencies
-If you don't have already, add Jitpack to your repositories:
+If you don't have already, add Jitpack to your repositories in root `build.gradle` file:
 
         maven { url "https://jitpack.io" }
 
 `Gradle` dependency (for libGDX core project):
 ```
-         compile "com.github.MrStahlfelge.gdx-websockets:core:$wsVersion"
+         implementation "com.github.MrStahlfelge.gdx-websockets:core:$wsVersion"
 ```
 
 GWT module:
@@ -24,22 +24,29 @@ GWT module:
 
 Desktop/Android/iOS:
 ```
-         compile "com.github.MrStahlfelge.gdx-websockets:common:$wsVersion"
+         implementation "com.github.MrStahlfelge.gdx-websockets:common:$wsVersion"
 ```
 
 (based on [nv-websocket-client](https://github.com/TakahikoKawasaki/nv-websocket-client))
 
-GWT:
+### GWT (Web)
+`Gradle` dependency for libGDX html project
 ```
-        compile "com.github.MrStahlfelge.gdx-websockets:core:$wsVersion:sources"
-        compile "com.github.MrStahlfelge.gdx-websockets:html:$wsVersion"
-        compile "com.github.MrStahlfelge.gdx-websockets:html:$wsVersion:sources"
+        implementation "com.github.MrStahlfelge.gdx-websockets:core:$wsVersion:sources"
+        implementation "com.github.MrStahlfelge.gdx-websockets:html:$wsVersion"
+        implementation "com.github.MrStahlfelge.gdx-websockets:html:$wsVersion:sources"
 ```
 
-GWT module:
+GWT module (GdxDefinition.gwt.xml):
 ```
         <inherits name='com.github.czyzby.websocket.GdxWebSocketGwt' />
 ```
+
+### Version
+
+Specify the `wsVersion` in the `gradle.properties` file in the root directory:
+
+`wsVersion=1.9.10.3` (or the latest version)
 
 ### Extensions
 
