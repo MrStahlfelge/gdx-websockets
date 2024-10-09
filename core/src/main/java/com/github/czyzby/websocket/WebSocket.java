@@ -118,6 +118,12 @@ public interface WebSocket {
      * @throws WebSocketException if unable to close the connection. */
     void close(int closeCode) throws WebSocketException;
 
+    /**
+     * Set host name for sni support
+     * @param hostname
+     */
+    void setHostName (String hostname);
+
     /** Closes the connection.
      *
      * @param closeCode connection close code.

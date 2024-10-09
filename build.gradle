@@ -31,7 +31,7 @@ allprojects {
 
         appName = 'gdx-websockets'
         gdxVersion = '1.9.10'
-        roboVMVersion = '2.3.12'
+        roboVMVersion = '2.3.22'
         nvVersion = '2.10'
     }
 
