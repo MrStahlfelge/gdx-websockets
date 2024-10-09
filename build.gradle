@@ -1,5 +1,5 @@
 ext {
-    GROUPID = 'com.github.MrStahlfelge.gdx-websockets'
+    GROUPID = 'com.github.Tom-SKi.gdx-websockets'
     VERSION = '1.9.10.3-SNAPSHOT'
 
 }
@@ -31,7 +31,7 @@ allprojects {
 
         appName = 'gdx-websockets'
         gdxVersion = '1.9.10'
-        roboVMVersion = '2.3.12'
+        roboVMVersion = '2.3.22'
         nvVersion = '2.10'
     }
 
