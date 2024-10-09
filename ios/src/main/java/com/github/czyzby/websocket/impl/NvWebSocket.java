@@ -1,5 +1,6 @@
 package com.github.czyzby.websocket.impl;
 
+import com.android.org.conscrypt.OpenSSLSocketFactoryImpl;
 import com.android.org.conscrypt.OpenSSLSocketImpl;
 import com.github.czyzby.websocket.WebSockets;
 import com.github.czyzby.websocket.data.WebSocketCloseCode;
@@ -8,7 +9,9 @@ import com.github.czyzby.websocket.data.WebSocketState;
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketFactory;
 
-import java.net.SocketException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.*;
 
 /** Default web socket implementation for desktop and mobile platforms.
  *
@@ -17,9 +20,62 @@ public class NvWebSocket extends AbstractWebSocket {
     private final WebSocketFactory webSocketFactory = new WebSocketFactory();
     private WebSocket webSocket;
 
+    private void setSNIForSocket (Socket socket) {
+        if (hostnameForSni != null) {
+            if (socket instanceof OpenSSLSocketImpl) {
+                ((OpenSSLSocketImpl) socket).setHostname(hostnameForSni);
+            }
+        }
+    }
+
     public NvWebSocket(final String url) {
         super(url);
         webSocketFactory.setVerifyHostname(verifyHostname);
+        webSocketFactory.setSSLSocketFactory(new OpenSSLSocketFactoryImpl() {
+
+            @Override
+            public Socket createSocket(InetAddress host, int port) throws IOException {
+                Socket socket = super.createSocket(host, port);
+                setSNIForSocket(socket);
+                return socket;
+            }
+
+            @Override
+            public Socket createSocket(Socket s, String host, int port, boolean autoClose) throws IOException {
+                Socket socket = super.createSocket(s, host, port, autoClose);
+                setSNIForSocket(socket);
+                return socket;
+            }
+
+            @Override
+            public Socket createSocket(String host, int port, InetAddress localHost, int localPort) throws IOException {
+                Socket socket = super.createSocket(host, port, localHost, localPort);
+                setSNIForSocket(socket);
+
+                return socket;
+            }
+
+            @Override
+            public Socket createSocket(InetAddress address, int port, InetAddress localAddress, int localPort) throws IOException {
+                Socket socket = super.createSocket(address, port, localAddress, localPort);
+                setSNIForSocket(socket);
+                return socket;
+            }
+
+            @Override
+            public Socket createSocket() throws IOException {
+                Socket socket = super.createSocket();
+                setSNIForSocket(socket);
+                return socket;
+            }
+
+            @Override
+            public Socket createSocket(String host, int port) throws IOException {
+                Socket socket = super.createSocket(host, port);
+                setSNIForSocket(socket);
+                return socket;
+            }
+        });
     }
 
     @Override
@@ -27,13 +83,6 @@ public class NvWebSocket extends AbstractWebSocket {
         try {
             dispose();
             final WebSocket currentWebSocket = webSocket = webSocketFactory.createSocket(getUrl());
-
-            if (hostnameForSni != null) {
-                if (currentWebSocket.getSocket() instanceof OpenSSLSocketImpl) {
-                    OpenSSLSocketImpl socket = (OpenSSLSocketImpl) currentWebSocket.getSocket();
-                    socket.setHostname(hostnameForSni);
-                }
-            }
 
             currentWebSocket.addListener(new NvWebSocketListener(this));
             currentWebSocket.connectAsynchronously();
