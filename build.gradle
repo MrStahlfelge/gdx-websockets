@@ -1,5 +1,5 @@
 ext {
-    GROUPID = 'com.github.MrStahlfelge.gdx-websockets'
+    GROUPID = 'com.github.Tom-SKi.gdx-websockets'
     VERSION = '1.9.10.3-SNAPSHOT'
 
 }
