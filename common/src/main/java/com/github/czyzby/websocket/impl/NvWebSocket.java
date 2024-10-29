@@ -49,7 +49,6 @@ public class NvWebSocket extends AbstractWebSocket {
 
         @Override
     public void setTimeouts (int  timeoutMillis) {
-        super.setUseTcpNoDelay(useTcpNoDelay);
         if (webSocket != null && webSocket.getSocket() != null) {
             try {
                 webSocket.getSocket().setSoTimeout(timeoutMillis);
