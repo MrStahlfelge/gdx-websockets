@@ -86,7 +86,6 @@ public class NvWebSocket extends AbstractWebSocket {
 
             webSocket.setPingInterval(2000);
             webSocket.setPongInterval(2000);
-            webSocket.getSocket().setSoTimeout((int) (webSocket.getPingInterval() + 5000));
 
             currentWebSocket.addListener(new NvWebSocketListener(this));
             currentWebSocket.connectAsynchronously();
@@ -101,6 +100,17 @@ public class NvWebSocket extends AbstractWebSocket {
         if (webSocket != null && webSocket.getSocket() != null) {
             try {
                 webSocket.getSocket().setTcpNoDelay(useTcpNoDelay);
+            } catch (SocketException ignored) {
+            }
+        }
+    }
+
+    @Override
+    public void setTimeouts (int  timeoutMillis) {
+        super.setUseTcpNoDelay(useTcpNoDelay);
+        if (webSocket != null && webSocket.getSocket() != null) {
+            try {
+                webSocket.getSocket().setSoTimeout(timeoutMillis);
             } catch (SocketException ignored) {
             }
         }

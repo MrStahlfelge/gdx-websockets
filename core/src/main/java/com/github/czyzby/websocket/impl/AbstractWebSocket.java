@@ -52,6 +52,10 @@ public abstract class AbstractWebSocket implements WebSocket {
         this.useTcpNoDelay = useTcpNoDelay;
     }
 
+    public void setTimeouts (int timeoutMillis) {
+
+    }
+
     @Override
     public void setVerifyHostname(boolean verifyHostname) {
         this.verifyHostname = verifyHostname;
