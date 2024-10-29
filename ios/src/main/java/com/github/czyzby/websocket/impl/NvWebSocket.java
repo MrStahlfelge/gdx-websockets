@@ -84,8 +84,9 @@ public class NvWebSocket extends AbstractWebSocket {
             dispose();
             final WebSocket currentWebSocket = webSocket = webSocketFactory.createSocket(getUrl());
 
-            webSocket.setPingInterval(5000);
-            webSocket.setPongInterval(5000);
+            webSocket.setPingInterval(2000);
+            webSocket.setPongInterval(2000);
+            webSocket.getSocket().setSoTimeout((int) (webSocket.getPingInterval() + 5000));
 
             currentWebSocket.addListener(new NvWebSocketListener(this));
             currentWebSocket.connectAsynchronously();
