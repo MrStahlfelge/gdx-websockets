@@ -5,6 +5,7 @@ import com.github.czyzby.websocket.data.WebSocketCloseCode;
 import com.github.czyzby.websocket.data.WebSocketException;
 import com.github.czyzby.websocket.data.WebSocketState;
 import com.neovisionaries.ws.client.WebSocket;
+import com.neovisionaries.ws.client.WebSocketExtension;
 import com.neovisionaries.ws.client.WebSocketFactory;
 
 import java.net.SocketException;
@@ -27,6 +28,7 @@ public class NvWebSocket extends AbstractWebSocket {
             dispose();
             final WebSocket currentWebSocket = webSocket = webSocketFactory.createSocket(getUrl());
             currentWebSocket.addListener(new NvWebSocketListener(this));
+            if (useDeflate) currentWebSocket.addExtension(WebSocketExtension.PERMESSAGE_DEFLATE);
             currentWebSocket.connectAsynchronously();
         } catch (final Throwable exception) {
             throw new WebSocketException("Unable to connect.", exception);
