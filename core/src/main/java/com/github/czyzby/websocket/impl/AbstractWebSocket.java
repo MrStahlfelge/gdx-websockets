@@ -18,6 +18,7 @@ public abstract class AbstractWebSocket implements WebSocket {
     private final String url;
     private final Array<WebSocketListener> listeners = new Array<WebSocketListener>(2); // Default 16 is likely too big.
     protected boolean useTcpNoDelay = true;
+    protected boolean useDeflate;
     protected boolean verifyHostname = false;
     private Serializer serializer = WebSockets.DEFAULT_SERIALIZER;
     private boolean serializeAsString;
@@ -270,4 +271,9 @@ public abstract class AbstractWebSocket implements WebSocket {
     public void close(final int closeCode) throws WebSocketException {
         close(closeCode, null);
     }
+
+    @Override
+    public void setPerMessageDeflate(boolean permessageDeflate){
+        useDeflate=permessageDeflate;
+    };
 }

@@ -124,4 +124,9 @@ public interface WebSocket {
      * @param reason closing reason. Optional.
      * @throws WebSocketException if unable to close the connection. */
     void close(int closeCode, String reason) throws WebSocketException;
+
+    /** @param permessageDeflate if true, enable the permessage deflate extension for this websocket
+     * NOTE: This has no effect in browsers.
+     * */
+    void setPerMessageDeflate(boolean permessageDeflate);
 }
