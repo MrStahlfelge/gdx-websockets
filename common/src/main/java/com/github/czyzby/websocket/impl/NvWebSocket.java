@@ -8,6 +8,7 @@ import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketFactory;
 
 import java.net.SocketException;
+import java.util.List;
 
 /** Default web socket implementation for desktop and mobile platforms.
  *
@@ -16,8 +17,8 @@ public class NvWebSocket extends AbstractWebSocket {
     private final WebSocketFactory webSocketFactory = new WebSocketFactory();
     private WebSocket webSocket;
 
-    public NvWebSocket(final String url) {
-        super(url);
+    public NvWebSocket(final String url, final List<String> protocols) {
+        super(url, protocols);
         webSocketFactory.setVerifyHostname(verifyHostname);
     }
 
@@ -26,6 +27,10 @@ public class NvWebSocket extends AbstractWebSocket {
         try {
             dispose();
             final WebSocket currentWebSocket = webSocket = webSocketFactory.createSocket(getUrl());
+            final List<String> protocols = getProtocols();
+            if (protocols != null && !protocols.isEmpty()) {
+                protocols.forEach(currentWebSocket::addProtocol);
+            }
             currentWebSocket.addListener(new NvWebSocketListener(this));
             currentWebSocket.connectAsynchronously();
         } catch (final Throwable exception) {

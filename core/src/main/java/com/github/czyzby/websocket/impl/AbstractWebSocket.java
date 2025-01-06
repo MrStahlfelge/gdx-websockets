@@ -9,6 +9,8 @@ import com.github.czyzby.websocket.data.WebSocketException;
 import com.github.czyzby.websocket.data.WebSocketState;
 import com.github.czyzby.websocket.serialization.Serializer;
 
+import java.util.List;
+
 /**
  * Abstract base for {@link WebSocket} implementations.
  *
@@ -16,6 +18,7 @@ import com.github.czyzby.websocket.serialization.Serializer;
  */
 public abstract class AbstractWebSocket implements WebSocket {
     private final String url;
+    private final List<String> protocols;
     private final Array<WebSocketListener> listeners = new Array<WebSocketListener>(2); // Default 16 is likely too big.
     protected boolean useTcpNoDelay = true;
     protected boolean verifyHostname = false;
@@ -23,8 +26,9 @@ public abstract class AbstractWebSocket implements WebSocket {
     private boolean serializeAsString;
     private boolean sendGracefully;
 
-    public AbstractWebSocket(final String url) {
+    public AbstractWebSocket(final String url, final List<String> protocols) {
         this.url = url;
+        this.protocols = protocols;
     }
 
     @Override
@@ -147,6 +151,11 @@ public abstract class AbstractWebSocket implements WebSocket {
     @Override
     public String getUrl() {
         return url;
+    }
+
+    @Override
+    public List<String> getProtocols() {
+        return protocols;
     }
 
     @Override
