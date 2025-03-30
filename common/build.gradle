@@ -2,5 +2,5 @@ apply plugin: 'java-library'
 
 dependencies {
   api project(":core")
-  compile "com.neovisionaries:nv-websocket-client:$nvVersion"
+  implementation "com.neovisionaries:nv-websocket-client:$nvVersion"
 }
