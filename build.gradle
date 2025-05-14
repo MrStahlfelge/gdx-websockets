@@ -33,6 +33,7 @@ allprojects {
         gdxVersion = '1.9.10'
         roboVMVersion = '2.3.12'
         nvVersion = '2.10'
+        gdxTeaVMVersion = '1.0.0'
     }
 
     repositories {
@@ -42,6 +43,7 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
         maven { url "https://jitpack.io" }
+        maven { url "https://teavm.org/maven/repository/" }
     }
 
     group = GROUPID
