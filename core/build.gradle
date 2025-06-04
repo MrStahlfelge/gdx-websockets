@@ -15,19 +15,14 @@ dependencies {
 	implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
 }
 
-targetCompatibility = 1.7
-sourceCompatibility = 1.7
+targetCompatibility = 1.8
+sourceCompatibility = 1.8
 
 
 ext {
 	ARTIFACTID = 'gdx-controllers-core'
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-	classifier = 'sources'
-	from sourceSets.main.allSource
-}
-
-artifacts {
-	archives sourcesJar
+java {
+	withSourcesJar()
 }

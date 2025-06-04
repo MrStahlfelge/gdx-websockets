@@ -21,7 +21,7 @@ buildscript {
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
-    apply plugin: "maven"
+    apply plugin: "maven-publish"
 
     ext {
         minSdk = 16
