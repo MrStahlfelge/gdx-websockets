@@ -42,6 +42,13 @@ GWT module (GdxDefinition.gwt.xml):
         <inherits name='com.github.czyzby.websocket.GdxWebSocketGwt' />
 ```
 
+### TeaVM (Web)
+
+`Gradle` dependency for libGDX teavm project
+```
+        implementation "com.github.MrStahlfelge.gdx-websockets:teavm:$wsVersion"
+```
+
 ### Version
 
 Specify the `wsVersion` in the `gradle.properties` file in the root directory:
@@ -70,6 +77,15 @@ In HTMLLauncher, make sure to call `GwtWebSockets.initiate()` before creating we
             // Initiating web sockets module - safe to call before creating application listener:
             GwtWebSockets.initiate();
             return new MyApplicationListener();
+        }
+```
+
+In TeaVMLauncher, make sure to call `TeaWebSockets.initiate()` before creating web sockets:
+```
+        public static void main (String[] args) {
+            // Initiating web sockets module - safe to call before creating application:
+            TeaWebSockets.initiate();
+            new TeaApplication(new MyApplicationListener(), config);
         }
 ```
 
