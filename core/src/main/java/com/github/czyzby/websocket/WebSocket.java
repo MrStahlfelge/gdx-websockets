@@ -5,6 +5,8 @@ import com.github.czyzby.websocket.data.WebSocketException;
 import com.github.czyzby.websocket.data.WebSocketState;
 import com.github.czyzby.websocket.serialization.Serializer;
 
+import java.util.List;
+
 /** Common interface for all web socket implementations.
  *
  * @author MJ */
@@ -35,6 +37,9 @@ public interface WebSocket {
 
     /** @return URL used by current web socket. Can be null if not properly connected or web socket is corrupted. */
     String getUrl();
+
+    /** @return protocols used by current web socket. Can be null to use default protocols. */
+    List<String> getProtocols();
 
     /** @param listener will be notified of web socket events. Listeners are notified in the order that they were
      *            added. */

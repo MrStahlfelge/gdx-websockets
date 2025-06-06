@@ -5,6 +5,8 @@ import com.github.czyzby.websocket.data.WebSocketException;
 import com.github.czyzby.websocket.serialization.Serializer;
 import com.github.czyzby.websocket.serialization.impl.JsonSerializer;
 
+import java.util.List;
+
 /** Utilities for web sockets.
  *
  * @author MJ */
@@ -31,10 +33,18 @@ public class WebSockets {
      * @return {@link WebSocket} instance, allowing to connect with the passed URL.
      * @see #toWebSocketUrl(String, int) */
     public static WebSocket newSocket(final String url) {
+        return newSocket(url, null);
+    }
+
+    /** @param url a valid URL.
+     * @param protocols the protocols to use when connecting.
+     * @return {@link WebSocket} instance, allowing to connect with the passed URL.
+     * @see #toWebSocketUrl(String, int) */
+    public static WebSocket newSocket(final String url, final List<String> protocols) {
         if (FACTORY == null) {
             throw new WebSocketException("Web sockets are not initiated.");
         }
-        return FACTORY.newWebSocket(url);
+        return FACTORY.newWebSocket(url, protocols);
     }
 
     /** @param host IP or domain name of the server.
@@ -103,7 +113,8 @@ public class WebSockets {
      * @author MJ */
     protected static interface WebSocketFactory {
         /** @param url URL to connect with. Factory can assume that the URL is not null and valid.
+         * @param protocols the protocols to use when connecting
          * @return platform-specific {@link WebSocket} instance. */
-        WebSocket newWebSocket(String url);
+        WebSocket newWebSocket(String url, List<String> protocols);
     }
 }

@@ -3,6 +3,8 @@ package com.github.czyzby.websocket;
 import com.github.czyzby.websocket.WebSockets.WebSocketFactory;
 import com.github.czyzby.websocket.impl.GwtWebSocket;
 
+import java.util.List;
+
 /** Allows to initiate GWT web sockets module.
  *
  * @author MJ */
@@ -20,8 +22,8 @@ public class GwtWebSockets {
      * @author MJ */
     protected static class GwtWebSocketFactory implements WebSocketFactory {
         @Override
-        public WebSocket newWebSocket(final String url) {
-            return new GwtWebSocket(url);
+        public WebSocket newWebSocket(final String url, final List<String> protocols) {
+            return new GwtWebSocket(url, protocols);
         }
     }
 }
