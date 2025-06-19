@@ -1,0 +1,37 @@
+apply plugin: 'java-library'
+
+configurations {
+	custom
+	compile.extendsFrom custom
+}
+
+eclipse {
+	project {
+		name = appName + "-iosrobovm"
+	}
+}
+
+dependencies {
+  	api project(":core")
+  	compile "com.neovisionaries:nv-websocket-client:$nvVersion"
+	implementation "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
+	implementation "com.mobidevelop.robovm:robovm-cocoatouch:$roboVMVersion"
+	implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+}
+
+targetCompatibility = 1.7
+sourceCompatibility = 1.7
+
+
+ext {
+	ARTIFACTID = 'gdx-controllers-iosrobovm'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+artifacts {
+	archives sourcesJar
+}

@@ -1,1 +1,1 @@
-include 'core', 'common', 'html', 'serialization'
+include 'core', 'common', 'ios', 'html', 'serialization'

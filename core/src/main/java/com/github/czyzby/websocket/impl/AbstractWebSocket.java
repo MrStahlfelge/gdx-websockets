@@ -22,6 +22,7 @@ public abstract class AbstractWebSocket implements WebSocket {
     private Serializer serializer = WebSockets.DEFAULT_SERIALIZER;
     private boolean serializeAsString;
     private boolean sendGracefully;
+    protected String hostnameForSni;
 
     public AbstractWebSocket(final String url) {
         this.url = url;
@@ -49,6 +50,10 @@ public abstract class AbstractWebSocket implements WebSocket {
 
     public void setUseTcpNoDelay(boolean useTcpNoDelay) {
         this.useTcpNoDelay = useTcpNoDelay;
+    }
+
+    public void setTimeouts (int timeoutMillis) {
+
     }
 
     @Override
@@ -269,5 +274,10 @@ public abstract class AbstractWebSocket implements WebSocket {
     @Override
     public void close(final int closeCode) throws WebSocketException {
         close(closeCode, null);
+    }
+
+    @Override
+    public void setHostName (String hostname) {
+        this.hostnameForSni = hostname;
     }
 }
